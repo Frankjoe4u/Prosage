@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Luna — Cycle Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/jpg" sizes="192x192" href="a1.jpg">
+    <link rel="icon" type="image/jpg" sizes="512x512" href="a1.jpg">
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="moon">🌙</span>
+        <span class="logo-text">CONTROL YOUR SEXLIFE</span>
+      </div>
+      <p class="tagline">Your gentle cycle companion</p>
+    </header>
+
+    <!-- Input Card -->
+    <section class="card input-card">
+      <h2 class="card-title">Tell me about your cycle</h2>
+
+      <div class="field">
+        <label for="lastPeriod">First day of last period</label>
+        <input type="date" id="lastPeriod" />
+      </div>
+
+      <div class="field">
+        <label for="cycleLength">Average cycle length</label>
+        <div class="stepper">
+          <button class="step-btn" id="decreaseLen" aria-label="Decrease">−</button>
+          <span class="step-val" id="cycleLengthVal">28</span>
+          <span class="step-unit">days</span>
+          <button class="step-btn" id="increaseLen" aria-label="Increase">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="periodDuration">Period duration</label>
+        <div class="stepper">
+          <button class="step-btn" id="decreaseDur" aria-label="Decrease">−</button>
+          <span class="step-val" id="periodDurVal">5</span>
+          <span class="step-unit">days</span>
+          <button class="step-btn" id="increaseDur" aria-label="Increase">+</button>
+        </div>
+      </div>
+
+      <button class="calc-btn" id="calcBtn">Calculate my cycle →</button>
+    </section>
+
+    <!-- Results -->
+    <section class="results hidden" id="results">
+
+      <div class="phase-strip" id="phaseStrip"></div>
+
+      <div class="cards-row">
+        <div class="mini-card" id="card-next-period">
+          <div class="mini-icon">🩸</div>
+          <div class="mini-label">Next Period</div>
+          <div class="mini-val" id="nextPeriodDate">—</div>
+        </div>
+        <div class="mini-card" id="card-ovulation">
+          <div class="mini-icon">✨</div>
+          <div class="mini-label">Ovulation</div>
+          <div class="mini-val" id="ovulationDate">—</div>
+        </div>
+      </div>
+
+      <div class="card result-card">
+        <h3 class="result-section-title">🛡️ Safe Days</h3>
+        <p class="result-note">Lower likelihood of conception</p>
+        <div class="date-bands" id="safeDays"></div>
+      </div>
+
+      <div class="card result-card fertile-card">
+        <h3 class="result-section-title">🌸 Fertile Window</h3>
+        <p class="result-note">Higher likelihood of conception</p>
+        <div class="date-bands" id="fertileDays"></div>
+      </div>
+
+      <!-- Gender Likelihood -->
+      <div class="card result-card gender-card" id="genderCard">
+        <h3 class="result-section-title">👶 Gender Likelihood</h3>
+        <p class="result-note">Based on the Shettles Method — timing of conception within the fertile window</p>
+
+        <div class="gender-tabs">
+          <button class="gtab active" data-tab="boy">👦 Boy</button>
+          <button class="gtab" data-tab="girl">👧 Girl</button>
+        </div>
+
+        <div class="gender-panel" id="panel-boy">
+          <div class="gender-hero boy-hero">
+            <div class="gender-emoji">♂</div>
+            <div class="gender-pct" id="boyPct">—</div>
+            <div class="gender-pct-label">likelihood</div>
+          </div>
+          <div class="gender-arc-wrap">
+            <svg class="arc-svg" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="arc-bg" d="M10,60 A50,50 0 0,1 110,60" stroke-width="10" stroke-linecap="round"/>
+              <path class="arc-fill boy-arc" id="boyArc" d="M10,60 A50,50 0 0,1 110,60" stroke-width="10" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="157"/>
+            </svg>
+          </div>
+          <div class="gender-tip">
+            <strong>Best window for a boy:</strong> Conceive as close to ovulation as possible (1 day before or on ovulation day). Y-sperm are faster but shorter-lived.
+          </div>
+          <div class="gender-days-label">Optimal days:</div>
+          <div class="date-bands" id="boyDays"></div>
+        </div>
+
+        <div class="gender-panel hidden" id="panel-girl">
+          <div class="gender-hero girl-hero">
+            <div class="gender-emoji">♀</div>
+            <div class="gender-pct" id="girlPct">—</div>
+            <div class="gender-pct-label">likelihood</div>
+          </div>
+          <div class="gender-arc-wrap">
+            <svg class="arc-svg" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="arc-bg" d="M10,60 A50,50 0 0,1 110,60" stroke-width="10" stroke-linecap="round"/>
+              <path class="arc-fill girl-arc" id="girlArc" d="M10,60 A50,50 0 0,1 110,60" stroke-width="10" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="157"/>
+            </svg>
+          </div>
+          <div class="gender-tip">
+            <strong>Best window for a girl:</strong> Conceive 3–5 days before ovulation. X-sperm are slower but survive longer, so they'll still be waiting when the egg is released.
+          </div>
+          <div class="gender-days-label">Optimal days:</div>
+          <div class="date-bands" id="girlDays"></div>
+        </div>
+
+        <div class="shettles-note">
+          📖 Based on the <em>Shettles Method</em>. This is a popular theory — not a medically guaranteed outcome. The actual probability of any conception resulting in a boy or girl is approximately 50/50.
+        </div>
+      </div>
+
+      <div class="card result-card period-card">
+        <h3 class="result-section-title">📅 Period Days</h3>
+        <p class="result-note">Expected menstruation window</p>
+        <div class="date-bands" id="periodDays"></div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="card calendar-card">
+        <h3 class="result-section-title">Monthly View</h3>
+        <div class="cal-legend">
+          <span class="leg-dot period-dot"></span><span>Period</span>
+          <span class="leg-dot fertile-dot"></span><span>Fertile</span>
+          <span class="leg-dot safe-dot"></span><span>Safe</span>
+        </div>
+        <div class="calendar" id="calendar"></div>
+      </div>
+
+      <div class="disclaimer card">
+        <p>⚠️ <strong>Disclaimer:</strong> This calculator provides an estimate based on average cycle patterns. It is <em>not</em> a reliable contraceptive method. For family planning or medical concerns, consult a healthcare professional.</p>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
