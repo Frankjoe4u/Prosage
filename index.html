@@ -1,18 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>FJ-tracker</title>
+  <title>FJ Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/jpg" sizes="192x192" href="a1.jpg">
-    <link rel="icon" type="image/jpg" sizes="512x512" href="a1.jpg">
+    <link rel="icon" type="image/jpg" sizes="192x192" href="pro.jpg">
+    <link rel="icon" type="image/jpg" sizes="512x512" href="pro.jpg">
   <link rel="stylesheet" href="style.css" />
-
 </head>
 <body>
+
+  <!-- Watermark -->
+  <div class="watermark" id="watermark"></div>
 
   <div class="bg-orbs">
     <div class="orb orb1"></div>
@@ -24,10 +27,10 @@
 
     <!-- Header -->
     <header class="header">
-      <div class="logo">
-        <span class="moon">FJ🌙</span>
-        <span class="logo-text">CONTROL YOUR SEXLIFE</span>
+      <div class="logo-img-wrap">
+        <img src="pro.jpg" alt="FJ Tracker Logo" class="logo-img" />
       </div>
+      <h1 class="app-title">CONTROL YOUR SEXLIFE</h1>
       <p class="tagline">Your gentle cycle companion</p>
     </header>
 
@@ -102,7 +105,6 @@
           <button class="gtab active" data-tab="boy">👦 Boy</button>
           <button class="gtab" data-tab="girl">👧 Girl</button>
         </div>
-
         <div class="gender-panel" id="panel-boy">
           <div class="gender-hero boy-hero">
             <div class="gender-emoji">♂</div>
